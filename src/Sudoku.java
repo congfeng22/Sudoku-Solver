@@ -1,7 +1,6 @@
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Sudoku {
     private List<List<Integer>> myGrid;
@@ -12,11 +11,20 @@ public class Sudoku {
      * Create a Sudoku from parameters
      * @param grid initial Sudoku grid
      * @param rules of the Sudoku grid
-     * @param candidates of each entry in the grid
      */
-    public Sudoku(List<List<Integer>> grid, Map<String, List<List<Integer>>> rules, Map<Integer, Set<Integer>> candidates){
+    public Sudoku(List<List<Integer>> grid, Map<String, List<List<Integer>>> rules){
         myGrid = grid;
         myRules = rules;
+
+        Map<Integer, Set<Integer>> candidates = new HashMap<>();
+        for (int i=0; i<81; i++){
+            if (grid.get(i/9).get(i%9) == 0) {
+                candidates.put(i, Stream.of(1, 2, 3, 4, 5, 6, 7, 8, 9).collect(Collectors.toCollection(HashSet::new)));
+            }
+            else {
+                candidates.put(i, new HashSet(Arrays.asList(grid.get(i/9).get(i%9))));
+            }
+        }
         myCandidates = candidates;
     }
 
@@ -39,6 +47,13 @@ public class Sudoku {
      */
     public Map<Integer, Set<Integer>> getCandidates(){
         return myCandidates;
+    }
+
+    /**
+     * @param newCandidates updated new candidates of the Sudoku
+     */
+    public void updateCandidates(Map<Integer, Set<Integer>> newCandidates){
+        myCandidates = newCandidates;
     }
 
     /**
