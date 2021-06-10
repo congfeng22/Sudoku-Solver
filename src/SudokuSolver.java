@@ -338,6 +338,22 @@ public class SudokuSolver {
                 }
             }
         }
+
+        // Check sandwich constraint
+        if (rules.containsKey("sandwich")){
+            List<List<Integer>> sandwichRules = rules.get("sandwich");
+            /**
+            for (List<Integer> kropki : kropkiRules){
+                int one = grid.get(kropki.get(1)/9).get(kropki.get(1)%9);
+                int two = grid.get(kropki.get(2)/9).get(kropki.get(2)%9);
+                if (one != 0 && two != 0){
+                    if (kropki.get(0)==1 && Math.abs(one-two) != 1) return false;
+                    if (kropki.get(0)==2 && one*2!=two && two*2!=one) return false;
+                }
+            }
+             **/
+        }
+
         return true;
     }
 
@@ -392,7 +408,7 @@ public class SudokuSolver {
         // normal
         rules.put("normal", null);
         List<List<Integer>> grid1 = gridParser("005009400407010002008020095004000070000607000060000200980060300300090104001800600");
-        List<List<Integer>> grid2 = gridParser("000000000058020760036000480007109800300000006010805020000010000702000508005204300");
+        List<List<Integer>> grid = gridParser("000000000003010400100509000000020650350000089079030000000203008004060200000000000");
 
         // knight
         //rules.put("knight", null);
@@ -487,8 +503,8 @@ public class SudokuSolver {
         xvRules.add(Arrays.asList(10,66,67));
         xvRules.add(Arrays.asList(10,70,71));
         xvRules.add(Arrays.asList(10,79,80));
-        rules.put("xv", xvRules);
-        List<List<Integer>> grid = gridParser("000000000000000000002000405000000000000000000000000000504000100000000000000000000");
+        //rules.put("xv", xvRules);
+        List<List<Integer>> grid12 = gridParser("000000000000000000002000405000000000000000000000000000504000100000000000000000000");
 
         // kropki
         //////////////////////////WARNING TIMEOUT/////////////////////////////////
@@ -521,6 +537,32 @@ public class SudokuSolver {
         kropkiRules.add(Arrays.asList(2,76,77));
         //rules.put("kropki", kropkiRules);
         List<List<Integer>> grid13 = gridParser("000000000000000000000000000000000000000000000000000000000000000000000000000000000");
+
+        // sandwich and knight
+        List<List<Integer>> sandwichRules = new ArrayList<>();
+        sandwichRules.add(Arrays.asList(1,5));
+        sandwichRules.add(Arrays.asList(2,28));
+        sandwichRules.add(Arrays.asList(3,8));
+        sandwichRules.add(Arrays.asList(4,0));
+        sandwichRules.add(Arrays.asList(5,29));
+        sandwichRules.add(Arrays.asList(621));
+        sandwichRules.add(Arrays.asList(7,2));
+        sandwichRules.add(Arrays.asList(8,8));
+        sandwichRules.add(Arrays.asList(9,7));
+        sandwichRules.add(Arrays.asList(10,2));
+        sandwichRules.add(Arrays.asList(11,18));
+        sandwichRules.add(Arrays.asList(12,22));
+        sandwichRules.add(Arrays.asList(13,19));
+        sandwichRules.add(Arrays.asList(14,0));
+        sandwichRules.add(Arrays.asList(15,33));
+        sandwichRules.add(Arrays.asList(16,9));
+        sandwichRules.add(Arrays.asList(17,2));
+        sandwichRules.add(Arrays.asList(18,28));
+
+        //rules.put("sandwich", sandwichRules);
+        //rules.put("knight", null);
+        List<List<Integer>> grid14 = gridParser("000000000000000000000000000000000000000000000000000000000000000000010000000000000");
+
 
 
         Sudoku sudoku = new Sudoku(grid, rules);
